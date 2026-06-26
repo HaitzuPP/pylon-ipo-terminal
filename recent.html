@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPO Terminal — Recent / Price · Pylon</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.ipo-tbl th.r,.ipo-tbl td.r{text-align:right}
+.px{font-variant-numeric:tabular-nums}
+.asof{font-size:var(--font-label);color:var(--text-faint)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-row">
+    <div>
+      <div class="brand">PYLON <span>· IPO Terminal</span></div>
+      <div class="brand-sub">Recent listings · Price tracker</div>
+    </div>
+    <div class="updated" id="updated"></div>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+
+<div class="wrap">
+  <p class="lede">Recent, relevant HK &amp; ASX listings tracked against their IPO price — date of listing, offer price and latest market price with the percentage move since debut. Themed names (AI / Healthcare / Robotics) are highlighted.</p>
+
+  <div class="section-header">
+    <div class="section-label">Recent IPOs — price vs. offer <span class="section-sublabel" id="sub"></span></div>
+    <div class="controls"><input type="text" id="search" placeholder="Search…"></div>
+  </div>
+  <div id="tbl"></div>
+
+  <div class="disclaimer" id="disc"></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="panel" id="panel"></aside>
+
+<script src="shared.js"></script>
+<script>
+var q="";
+function buildRecentTable(rows){
+  var thead='<th class="l">Company</th><th class="l">Mkt</th><th class="l">Theme</th>'+
+    '<th class="l">Listed</th><th class="r">IPO price</th><th class="r">Current</th><th class="r">Change</th>'+
+    '<th class="r">As of</th><th class="l">Source</th>';
+  var body=rows.map(function(r){
+    var idx=IPOS.indexOf(r);
+    return '<tr class="'+(r.theme?'flagged':'')+'" data-i="'+idx+'">'+
+      '<td class="l"><span class="co-name">'+esc(r.co)+'</span>'+(r.tick?' <span class="co-tick">'+esc(r.tick)+'</span>':'')+'</td>'+
+      '<td class="l"><span class="mkt '+r.mkt.toLowerCase()+'">'+r.mkt+'</span></td>'+
+      '<td class="l">'+themeTags(r.theme)+'</td>'+
+      '<td class="l">'+esc(r.listing.replace(/^Listed /,''))+'</td>'+
+      '<td class="r px">'+esc(r.ipoPx)+'</td>'+
+      '<td class="r px">'+esc(r.curPx)+'</td>'+
+      '<td class="r">'+fmtChange(pctChange(r))+'</td>'+
+      '<td class="r asof">'+esc(r.pxAsOf)+'</td>'+
+      '<td class="l"><a class="src-link" href="'+r.pxSrc[1]+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">'+esc(r.pxSrc[0].split(" — ")[0])+' ↗</a></td>'+
+      '</tr>';
+  }).join("");
+  return '<div class="tbl-wrap"><table class="ipo-tbl"><thead><tr>'+thead+'</tr></thead><tbody>'+body+'</tbody></table></div>';
+}
+function render(){
+  var data=IPOS.filter(function(r){return r.recent&&r.ipoNum!=null&&r.curNum!=null;})
+    .filter(function(r){return !q||(r.co+" "+r.sector+" "+(r.tick||"")).toLowerCase().indexOf(q)>=0;})
+    .sort(byDateDesc);
+  document.getElementById("sub").textContent="— "+data.length+" listings";
+  var c=document.getElementById("tbl");
+  c.innerHTML=data.length?buildRecentTable(data):'<div class="empty">No recent listings match.</div>';
+  wireRows(c);
+}
+(function(){
+  initChrome("recent.html");
+  document.getElementById("disc").innerHTML="IPO price = global offer price. Current price is the latest available market quote as of the date shown (delayed snapshot, not live) — verify against the linked source before acting. Change = current vs. offer price. Compiled 26 Jun 2026. Not investment advice.";
+  render();
+  var s=document.getElementById("search");
+  s.addEventListener("input",function(){q=s.value.trim().toLowerCase();render();});
+})();
+</script>
+</body>
+</html>

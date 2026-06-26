@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPO Terminal — Overview · Pylon</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-row">
+    <div>
+      <div class="brand">PYLON <span>· IPO Terminal</span></div>
+      <div class="brand-sub">Hong Kong (HKEX) &amp; Australia (ASX)</div>
+    </div>
+    <div class="updated" id="updated"></div>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+
+<div class="wrap">
+  <div class="legend" id="legend"></div>
+
+  <div class="section-header">
+    <div class="section-label">All IPOs <span class="section-sublabel" id="count-sub"></span></div>
+    <div class="controls">
+      <input type="text" id="search" placeholder="Search company / sector…">
+      <div class="seg" id="mkt-seg">
+        <button data-mkt="all" class="on">All</button>
+        <button data-mkt="HK">HK</button>
+        <button data-mkt="AU">AU</button>
+      </div>
+      <button class="chip" id="flag-toggle">★ AI / Health / Robotics</button>
+    </div>
+  </div>
+  <div id="tbl"></div>
+  <div class="disclaimer" id="disc"></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="panel" id="panel"></aside>
+
+<script src="shared.js"></script>
+<script>
+var state={mkt:"all",flagOnly:false,q:""};
+function load(){try{var s=JSON.parse(localStorage.getItem("ipoterm")||"{}");Object.assign(state,s);}catch(e){}}
+function save(){try{localStorage.setItem("ipoterm",JSON.stringify(state));}catch(e){}}
+function filtered(){
+  var q=state.q.trim().toLowerCase();
+  return IPOS.filter(function(r){
+    if(state.mkt!=="all"&&r.mkt!==state.mkt)return false;
+    if(state.flagOnly&&!r.theme)return false;
+    if(q&&(r.co+" "+r.sector+" "+(r.tick||"")).toLowerCase().indexOf(q)<0)return false;
+    return true;
+  }).sort(byDateDesc);
+}
+function render(){
+  var data=filtered();
+  document.getElementById("count-sub").textContent="— "+data.length+" shown";
+  var c=document.getElementById("tbl");
+  c.innerHTML=data.length?buildTable(data,["company","mkt","sector","theme","listing","deal","status","source"])
+    :'<div class="empty">No IPOs match these filters.</div>';
+  wireRows(c);
+}
+function syncControls(){
+  Array.prototype.forEach.call(document.querySelectorAll("#mkt-seg button"),function(b){
+    b.classList.toggle("on",b.getAttribute("data-mkt")===state.mkt);});
+  document.getElementById("flag-toggle").classList.toggle("on",state.flagOnly);
+  document.getElementById("search").value=state.q;
+}
+(function(){
+  load();initChrome("index.html");
+  document.getElementById("disc").innerHTML="Snapshot compiled 26 Jun 2026 from HKEX/ASX disclosures and press reporting; pre-listing dates and deal sizes are indicative. \"n/d\" = not disclosed. Click any row for the company overview and source links. Not investment advice.";
+  syncControls();render();
+  Array.prototype.forEach.call(document.querySelectorAll("#mkt-seg button"),function(b){
+    b.addEventListener("click",function(){state.mkt=b.getAttribute("data-mkt");save();syncControls();render();});});
+  document.getElementById("flag-toggle").addEventListener("click",function(){state.flagOnly=!state.flagOnly;save();syncControls();render();});
+  var s=document.getElementById("search");
+  s.addEventListener("input",function(){state.q=s.value;save();render();});
+})();
+</script>
+</body>
+</html>

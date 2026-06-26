@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPO Terminal — HK · Pylon</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-row">
+    <div>
+      <div class="brand">PYLON <span>· IPO Terminal</span></div>
+      <div class="brand-sub">Hong Kong · HKEX</div>
+    </div>
+    <div class="updated" id="updated"></div>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+
+<div class="wrap">
+  <div class="legend" id="legend"></div>
+
+  <div class="section-header">
+    <div class="section-label">Upcoming &amp; In Pipeline <span class="section-sublabel" id="up-sub"></span></div>
+    <div class="controls"><input type="text" id="search" placeholder="Search company / sector…"></div>
+  </div>
+  <div id="up-tbl"></div>
+
+  <div class="section-header">
+    <div class="section-label">Completed (2026) <span class="section-sublabel" id="done-sub"></span></div>
+  </div>
+  <div id="done-tbl"></div>
+
+  <div class="disclaimer" id="disc"></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="panel" id="panel"></aside>
+
+<script src="shared.js"></script>
+<script>
+var MKT="HK";
+var q="";
+function rows(){return IPOS.filter(function(r){return r.mkt===MKT;});}
+function match(r){return !q||(r.co+" "+r.sector+" "+(r.tick||"")).toLowerCase().indexOf(q)>=0;}
+function render(){
+  var all=rows();
+  var up=all.filter(function(r){return !isListed(r)&&match(r);}).sort(byDateAsc);
+  var done=all.filter(function(r){return isListed(r)&&match(r);}).sort(byDateDesc);
+  document.getElementById("up-sub").textContent="— "+up.length;
+  document.getElementById("done-sub").textContent="— "+done.length;
+  var cols=["company","sector","theme","listing","deal","status","source"];
+  var u=document.getElementById("up-tbl");
+  u.innerHTML=up.length?buildTable(up,cols):'<div class="empty">No upcoming HK IPOs match.</div>';wireRows(u);
+  var d=document.getElementById("done-tbl");
+  d.innerHTML=done.length?buildTable(done,["company","sector","theme","listing","deal","status","source"]):'<div class="empty">No completed listings match.</div>';wireRows(d);
+}
+(function(){
+  initChrome("hk.html");
+  document.getElementById("disc").innerHTML="Full HKEX IPO list — completed 2026 listings plus the current pipeline of names that have filed or cleared a listing hearing, from HKEX disclosures and press. \"Confirmed\" = specific date / active book-build; \"Provisional\" = hearing cleared but date not fixed. \"n/d\" = not disclosed. Click any row for the company overview. Not investment advice. Compiled 26 Jun 2026.";
+  render();
+  var s=document.getElementById("search");
+  s.addEventListener("input",function(){q=s.value.trim().toLowerCase();render();});
+})();
+</script>
+</body>
+</html>

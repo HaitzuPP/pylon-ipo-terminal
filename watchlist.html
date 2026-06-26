@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPO Terminal — Watchlist · Pylon</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-row">
+    <div>
+      <div class="brand">PYLON <span>· IPO Terminal</span></div>
+      <div class="brand-sub">Watchlist · Upcoming IPOs</div>
+    </div>
+    <div class="updated" id="updated"></div>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+
+<div class="wrap">
+  <div class="legend" id="legend"></div>
+  <p class="lede">Upcoming HKEX &amp; ASX IPOs only — companies that have not yet started trading. The watchlist leads with names that have a <strong>confirmed listing date or active book-build</strong>; names that have cleared a listing hearing but have no locked date are listed below as provisional.</p>
+
+  <div class="section-header">
+    <div class="section-label">Confirmed / Active <span class="section-sublabel" id="c-sub"></span></div>
+  </div>
+  <div id="confirmed-tbl"></div>
+
+  <div class="section-header">
+    <div class="section-label">Provisional <span class="section-sublabel">— cleared hearing, date not yet set</span></div>
+  </div>
+  <div id="prov-tbl"></div>
+
+  <div class="disclaimer" id="disc"></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="panel" id="panel"></aside>
+
+<script src="shared.js"></script>
+<script>
+(function(){
+  initChrome("watchlist.html");
+  var upcoming=IPOS.filter(function(r){return !isListed(r);});
+  var confirmed=upcoming.filter(function(r){return r.confirmed;}).sort(byDateAsc);
+  var prov=upcoming.filter(function(r){return !r.confirmed;}).sort(byDateAsc);
+
+  document.getElementById("c-sub").textContent="— "+confirmed.length+" names";
+
+  var cols=["company","mkt","sector","theme","listing","deal","status","source"];
+  var c1=document.getElementById("confirmed-tbl");
+  c1.innerHTML=confirmed.length?buildTable(confirmed,cols)
+    :'<div class="empty">No upcoming IPO currently has a fully locked listing date. The names below have cleared their listing hearing and are expected to price in the coming weeks — watch this space.</div>';
+  wireRows(c1);
+
+  var c2=document.getElementById("prov-tbl");
+  c2.innerHTML=prov.length?buildTable(prov,cols):'<div class="empty">None.</div>';
+  wireRows(c2);
+
+  document.getElementById("disc").innerHTML="\"Confirmed / active\" = a specific listing date or live book-build is reported; \"provisional\" = listing hearing cleared but timing not yet fixed. Pre-listing deal sizes shown where disclosed (\"n/d\" otherwise). Click any row for the company overview. Not investment advice. Compiled 26 Jun 2026.";
+})();
+</script>
+</body>
+</html>
