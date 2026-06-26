@@ -50,11 +50,11 @@ function render(){
   var done=all.filter(function(r){return isListed(r)&&match(r);}).sort(byDateDesc);
   document.getElementById("up-sub").textContent="— "+up.length;
   document.getElementById("done-sub").textContent="— "+done.length;
-  var cols=["company","sector","theme","listing","deal","status","source"];
+  var cols=["company","sector","theme","listing","mcap","status","source"];
   var u=document.getElementById("up-tbl");
   u.innerHTML=up.length?buildTable(up,cols):'<div class="empty">No upcoming ASX IPOs match.</div>';wireRows(u);
   var d=document.getElementById("done-tbl");
-  d.innerHTML=done.length?buildTable(done,["company","sector","theme","listing","deal","status","source"]):'<div class="empty">No completed listings match.</div>';wireRows(d);
+  d.innerHTML=done.length?buildTable(done,["company","sector","theme","listing","mcap","status","source"]):'<div class="empty">No completed listings match.</div>';wireRows(d);
 }
 (function(){
   initChrome("asx.html");

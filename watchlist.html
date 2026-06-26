@@ -48,7 +48,7 @@
 
   document.getElementById("c-sub").textContent="— "+confirmed.length+" names";
 
-  var cols=["company","mkt","sector","theme","listing","deal","status","source"];
+  var cols=["company","mkt","sector","theme","listing","mcap","status","source"];
   var c1=document.getElementById("confirmed-tbl");
   c1.innerHTML=confirmed.length?buildTable(confirmed,cols)
     :'<div class="empty">No upcoming IPO currently has a fully locked listing date. The names below have cleared their listing hearing and are expected to price in the coming weeks — watch this space.</div>';

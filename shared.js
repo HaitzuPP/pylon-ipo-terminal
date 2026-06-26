@@ -5,7 +5,7 @@ var IPOS = [
   {
     co:"Luxshare Precision Industry", tick:"002475 (A) / HK pending", mkt:"HK",
     sector:"Electronics / Apple supplier", theme:null,
-    listing:"~Jul 2026 (target)", date:"2026-07-15", deal:"US$2–3bn", confirmed:false,
+    listing:"~Jul 2026 (target)", date:"2026-07-15", deal:"US$2–3bn", mcap:"~US$75bn (group)", confirmed:false,
     status:"approved", statusTxt:"Hearing passed",
     src:"https://www.bloomberg.com/news/articles/2026-06-24/airpods-maker-luxshare-said-to-gauge-interest-for-3-billion-hong-kong-listing",
     srcTxt:"Bloomberg",
@@ -21,7 +21,7 @@ var IPOS = [
   {
     co:"METiS TechBio", tick:"7666.HK", mkt:"HK",
     sector:"AI drug delivery / biopharma", theme:["ai","health"],
-    listing:"Listed 13 May 2026", date:"2026-05-13", deal:"HK$2.1bn (US$269m)", confirmed:true,
+    listing:"Listed 13 May 2026", date:"2026-05-13", deal:"HK$2.1bn (US$269m)", mcap:"HK$14.0bn", confirmed:true,
     status:"listed", statusTxt:"Listed",
     recent:true, ipoPx:"HK$10.50", ipoNum:10.50, curPx:"HK$12.84", curNum:12.84, pxAsOf:"11 Jun 2026",
     pxSrc:["Investing.com — 7666.HK quote","https://www.investing.com/equities/metis-tech-bio-co-ltd"],
@@ -69,7 +69,7 @@ var IPOS = [
   {
     co:"Manycore Tech (Kujiale / Coohom)", tick:"0068.HK", mkt:"HK",
     sector:"Spatial-intelligence software", theme:["ai"],
-    listing:"Listed 17 Apr 2026", date:"2026-04-17", deal:"HK$1.09bn (US$160m)", confirmed:true,
+    listing:"Listed 17 Apr 2026", date:"2026-04-17", deal:"HK$1.09bn (US$160m)", mcap:"HK$25.4bn", confirmed:true,
     status:"listed", statusTxt:"Listed",
     recent:true, ipoPx:"HK$7.62", ipoNum:7.62, curPx:"HK$14.20", curNum:14.20, pxAsOf:"18 Jun 2026",
     pxSrc:["Simply Wall St — 0068.HK","https://simplywall.st/stocks/hk/software/hkg-68/manycore-tech-shares"],
@@ -83,9 +83,9 @@ var IPOS = [
     ]
   },
   {
-    co:"Zhipu AI", tick:"Z.ai", mkt:"HK",
+    co:"Zhipu AI", tick:"02513.HK", mkt:"HK",
     sector:"Foundation models / LLM", theme:["ai"],
-    listing:"Listed Jan 2026", date:"2026-01-20", deal:"Undisclosed", confirmed:true,
+    listing:"Listed Jan 2026", date:"2026-01-20", deal:"Undisclosed", mcap:"~HK$1.0tn", confirmed:true,
     status:"listed", statusTxt:"Listed",
     src:"https://techbuzzchina.substack.com/p/in-hong-kong-ipo-wave-robots-that",
     srcTxt:"TechBuzz China",
@@ -97,9 +97,9 @@ var IPOS = [
     ]
   },
   {
-    co:"MiniMax", tick:"AI lab", mkt:"HK",
+    co:"MiniMax", tick:"0100.HK", mkt:"HK",
     sector:"Foundation models / LLM", theme:["ai"],
-    listing:"Listed Jan 2026", date:"2026-01-22", deal:"Undisclosed", confirmed:true,
+    listing:"Listed Jan 2026", date:"2026-01-22", deal:"Undisclosed", mcap:"HK$143bn", confirmed:true,
     status:"listed", statusTxt:"Listed",
     src:"https://techbuzzchina.substack.com/p/in-hong-kong-ipo-wave-robots-that",
     srcTxt:"TechBuzz China",
@@ -127,7 +127,7 @@ var IPOS = [
   {
     co:"Boresight Ltd", tick:"ASX:BST", mkt:"AU",
     sector:"Defence tech / drones", theme:["robot"],
-    listing:"Listed 10 Jun 2026", date:"2026-06-10", deal:"A$8m", confirmed:true,
+    listing:"Listed 10 Jun 2026", date:"2026-06-10", deal:"A$8m", mcap:"~A$53m", confirmed:true,
     status:"listed", statusTxt:"Listed",
     recent:true, ipoPx:"A$0.20", ipoNum:0.20, curPx:"A$0.60", curNum:0.60, pxAsOf:"Jun 2026",
     pxSrc:["StockAnalysis — ASX:BST","https://stockanalysis.com/quote/asx/BST/"],
@@ -144,7 +144,7 @@ var IPOS = [
   {
     co:"SkinKandy", tick:"ASX:SK1", mkt:"AU",
     sector:"Specialty retail", theme:null,
-    listing:"Listed 21 May 2026", date:"2026-05-21", deal:"~A$160m", confirmed:true,
+    listing:"Listed 21 May 2026", date:"2026-05-21", deal:"~A$160m", mcap:"~A$246m", confirmed:true,
     status:"listed", statusTxt:"Listed",
     recent:true, ipoPx:"A$2.20", ipoNum:2.20, curPx:"A$2.21", curNum:2.21, pxAsOf:"4 Jun 2026",
     pxSrc:["Market Index — ASX:SK1","https://www.marketindex.com.au/asx/sk1"],
@@ -281,6 +281,7 @@ function themeTags(theme){
   return theme.map(function(t){return '<span class="tag '+t+'">'+THEME_LABEL[t]+'</span>';}).join(" ");
 }
 function dealCell(r){return r.deal==="Undisclosed"?'<span class="dash">n/d</span>':esc(r.deal);}
+function mcapCell(r){return r.mcap?esc(r.mcap):'<span class="dash">n/d</span>';}
 function byDateDesc(a,b){return a.date<b.date?1:a.date>b.date?-1:0;}
 function byDateAsc(a,b){return a.date<b.date?-1:a.date>b.date?1:0;}
 function pctChange(r){if(r.ipoNum==null||r.curNum==null)return null;return (r.curNum-r.ipoNum)/r.ipoNum*100;}
@@ -303,7 +304,7 @@ function renderLegend(){
 
 /* ---------- shared chrome ---------- */
 function renderNav(page){
-  var links=[["index.html","Overview"],["watchlist.html","Watchlist"],["recent.html","Recent / Price"],["asx.html","ASX"],["hk.html","HK"]];
+  var links=[["index.html","Pipeline"],["asx.html","ASX"],["hk.html","HK"],["recent.html","Price Performance"]];
   var el=document.getElementById("nav");
   if(el) el.innerHTML=links.map(function(l){
     return '<a href="'+l[0]+'"'+(l[0]===page?' class="on"':'')+'>'+l[1]+'</a>';
@@ -316,7 +317,7 @@ function renderNav(page){
    cols: array of column keys from: company, mkt, sector, theme, listing, confirmed, deal, status, source */
 function buildTable(rows, cols){
   var heads={company:["Company","l"],mkt:["Mkt","l"],sector:["Sector","l"],theme:["Theme","l"],
-    listing:["Listing","l"],confirmed:["Date","l"],deal:["Deal size",""],status:["Status","l"],source:["Source","l"]};
+    listing:["Listing","l"],confirmed:["Date","l"],mcap:["Market cap",""],status:["Status","l"],source:["Source","l"]};
   var thead=cols.map(function(c){return '<th class="'+heads[c][1]+'">'+heads[c][0]+'</th>';}).join("");
   var body=rows.map(function(r){
     var idx=IPOS.indexOf(r);
@@ -327,7 +328,7 @@ function buildTable(rows, cols){
       if(c==="theme")return '<td class="l">'+themeTags(r.theme)+'</td>';
       if(c==="listing")return '<td class="l">'+esc(r.listing)+'</td>';
       if(c==="confirmed")return '<td class="l"><span class="cdate '+(r.confirmed?'yes':'no')+'">'+(r.confirmed?'Confirmed':'Provisional')+'</span></td>';
-      if(c==="deal")return '<td>'+dealCell(r)+'</td>';
+      if(c==="mcap")return '<td>'+mcapCell(r)+'</td>';
       if(c==="status")return '<td class="l"><span class="status '+r.status+'">'+esc(r.statusTxt)+'</span></td>';
       if(c==="source")return '<td class="l"><a class="src-link" href="'+r.src+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">'+esc(r.srcTxt)+' ↗</a></td>';
       return '<td></td>';
@@ -358,7 +359,7 @@ function openPanel(i){
   var body=
     '<div class="kv"><div class="k">Sector</div><div class="v">'+r.sector+'</div></div>'+
     '<div class="kv"><div class="k">Listing</div><div class="v">'+esc(r.listing)+' &nbsp;<span class="cdate '+(r.confirmed?'yes':'no')+'">'+(r.confirmed?'Confirmed':'Provisional')+'</span></div></div>'+
-    '<div class="kv"><div class="k">Deal size</div><div class="v">'+(r.deal==="Undisclosed"?'<span class="dash">Not disclosed</span>':esc(r.deal))+'</div></div>'+
+    '<div class="kv"><div class="k">Market cap</div><div class="v">'+(r.mcap?esc(r.mcap):'<span class="dash">Not disclosed</span>')+'</div></div>'+
     '<div class="kv"><div class="k">Announcement</div><div class="v"><a class="src-link" href="'+r.src+'" target="_blank" rel="noopener">'+esc(r.srcTxt)+' ↗</a></div></div>'+
     (r.recent?
       '<div class="kv"><div class="k">IPO price</div><div class="v">'+esc(r.ipoPx)+'</div></div>'+

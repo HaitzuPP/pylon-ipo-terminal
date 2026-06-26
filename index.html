@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IPO Terminal — Overview · Pylon</title>
+<title>IPO Terminal — Pipeline · Pylon</title>
 <link rel="stylesheet" href="shared.css">
 </head>
 <body>
@@ -22,7 +22,7 @@
   <div class="legend" id="legend"></div>
 
   <div class="section-header">
-    <div class="section-label">All IPOs <span class="section-sublabel" id="count-sub"></span></div>
+    <div class="section-label">Pipeline — upcoming IPOs <span class="section-sublabel" id="count-sub"></span></div>
     <div class="controls">
       <input type="text" id="search" placeholder="Search company / sector…">
       <div class="seg" id="mkt-seg">
@@ -50,16 +50,17 @@ function filtered(){
   return IPOS.filter(function(r){
     if(state.mkt!=="all"&&r.mkt!==state.mkt)return false;
     if(state.flagOnly&&!r.theme)return false;
+    if(isListed(r))return false;
     if(q&&(r.co+" "+r.sector+" "+(r.tick||"")).toLowerCase().indexOf(q)<0)return false;
     return true;
-  }).sort(byDateDesc);
+  }).sort(byDateAsc);
 }
 function render(){
   var data=filtered();
   document.getElementById("count-sub").textContent="— "+data.length+" shown";
   var c=document.getElementById("tbl");
-  c.innerHTML=data.length?buildTable(data,["company","mkt","sector","theme","listing","deal","status","source"])
-    :'<div class="empty">No IPOs match these filters.</div>';
+  c.innerHTML=data.length?buildTable(data,["company","mkt","sector","theme","listing","mcap","status","source"])
+    :'<div class="empty">No upcoming IPOs match these filters.</div>';
   wireRows(c);
 }
 function syncControls(){
