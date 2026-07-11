@@ -1,111 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IPO Terminal — Robotics · Pylon</title>
+<title>Pylon IPO Terminal | Robotics IPO class of 2025-26</title>
+<meta name="description" content="Every robotics and embodied-AI company that listed or lined up to list across 2025 and 2026, China and the US, with full company analysis.">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="stylesheet" href="shared.css">
 </head>
 <body>
-<div class="topbar">
-  <div class="topbar-row">
-    <div>
-      <div class="brand"><a href="index.html">PYLON <span>· IPO Terminal</span></a></div>
-      <div class="brand-sub">Robotics &amp; Embodied AI — China &amp; United States</div>
-    </div>
-    <div class="updated" id="updated"></div>
-  </div>
-  <div class="nav" id="nav"></div>
+<header><nav>
+<a href="index.html" class="nav-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 15V11M12 15V8M16 15v-3" stroke-linecap="round"/></svg><span>PYLON <b>· IPO Terminal</b></span></a>
+<button class="hamburger" onclick="toggleNav()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+<div class="nav-links">
+<a href="index.html" class="nav-link active">TERMINAL</a>
+<a href="https://pylon.partners" class="nav-link" target="_blank" rel="noopener">PYLON</a>
+<button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">☀</button>
 </div>
-
-<div class="wrap">
-  <div class="lede" id="lede"></div>
-
-  <div class="ps-wrap" id="stats"></div>
-
-  <div class="legend" id="legend"></div>
-
-  <div class="section-header">
-    <div class="section-label">Robotics IPO pipeline <span class="section-sublabel" id="count-sub"></span></div>
-    <div class="controls">
-      <input type="text" id="search" placeholder="Search company / subsector / ticker…">
-      <div class="seg" id="mkt-seg">
-        <button data-mkt="all" class="on">All</button>
-        <button data-mkt="CN">China</button>
-        <button data-mkt="US">US</button>
-      </div>
-      <div class="seg" id="sub-seg">
-        <button data-sub="all" class="on">All sectors</button>
-        <button data-sub="humanoid">Humanoid</button>
-        <button data-sub="auto">Autonomous</button>
-        <button data-sub="warehouse">Warehouse</button>
-        <button data-sub="lidar">Lidar</button>
-        <button data-sub="defense">Defense</button>
-      </div>
-      <button class="chip" id="live-toggle">● Listed only</button>
-    </div>
-  </div>
-  <div id="tbl"></div>
-  <div class="disclaimer" id="disc"></div>
+</nav></header>
+<main>
+<div class="hero-label"><span>Robotics &amp; Embodied AI · 2025-26 IPO class</span><span class="status"><span class="dot"></span> <span id="shownCount">15</span> companies tracked</span></div>
+<h1 class="hero-title">The robotics <span class="accent">IPO class</span> of 2025-26</h1>
+<p class="hero-sub">Every robotics and embodied-AI company that listed, or lined up to list, across 2025 and 2026. Humanoids, autonomous driving, warehouse and service robots, components and foundation models, China and the United States side by side. Click any row for the full company analysis.</p>
+<div class="controls">
+<button class="filter-pill active" data-f="all">All 15</button>
+<button class="filter-pill" data-f="listed">Listed</button>
+<button class="filter-pill" data-f="pipeline">Pipeline</button>
+<button class="filter-pill" data-f="CN">China</button>
+<button class="filter-pill" data-f="US">US</button>
+<input class="search-box" id="search" placeholder="Search company…">
 </div>
-
-<div class="overlay" id="overlay"></div>
-<aside class="panel" id="panel"></aside>
-
-<script src="data.js"></script>
+<div class="table-wrap"><div class="table-scroll"><table>
+<thead><tr><th>Listed</th><th>Exchange</th><th>Company</th><th class="hide-sm">Description</th><th class="num">Implied valuation</th><th>Status</th><th></th></tr></thead>
+<tbody id="rows"><tr data-listed="0" data-mkt="CN" data-search="leju robotics 乐聚机器人 chinext shenzhen humanoid robot maker behind the kuavo series, filing on shenzhen&#x27;s chinext board." onclick="location.href='leju.html'"><td class="date-cell">2027 (est.)</td><td class="exch">ChiNext</td><td class="co-cell"><div class="co-name">Leju Robotics <span class="co-cn">乐聚机器人</span></div></td><td class="hide-sm"><div class="co-desc">Shenzhen humanoid robot maker behind the Kuavo series, filing on Shenzhen&#x27;s ChiNext board.</div></td><td class="num">US$1.4bn</td><td><span class="pill filed">Filed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="0" data-mkt="US" data-search="agility robotics  nasdaq us humanoid robotics maker of digit warehouse robot, going public via churchill capital spac merger." onclick="location.href='agility.html'"><td class="date-cell">Q4 2026</td><td class="exch">Nasdaq</td><td class="co-cell"><div class="co-name">Agility Robotics</div></td><td class="hide-sm"><div class="co-desc">US humanoid robotics maker of Digit warehouse robot, going public via Churchill Capital SPAC merger.</div></td><td class="num">US$2.5bn</td><td><span class="pill spac">SPAC</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="0" data-mkt="CN" data-search="engineai 众擎机器人 hkex shenzhen humanoid robot maker, first chinese humanoid pure-play to file for a hong kong listing." onclick="location.href='engineai.html'"><td class="date-cell">Late 2026 or 2027</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">EngineAI <span class="co-cn">众擎机器人</span></div></td><td class="hide-sm"><div class="co-desc">Shenzhen humanoid robot maker, first Chinese humanoid pure-play to file for a Hong Kong listing.</div></td><td class="num">US$1.5bn</td><td><span class="pill filed">Filed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="0" data-mkt="CN" data-search="agibot 智元机器人 hkex best-funded chinese humanoid-robot maker pursuing a hong kong ipo and an a-share backdoor via swancor." onclick="location.href='agibot.html'"><td class="date-cell">Q3 2026</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">AgiBot <span class="co-cn">智元机器人</span></div></td><td class="hide-sm"><div class="co-desc">Best-funded Chinese humanoid-robot maker pursuing a Hong Kong IPO and an A-share backdoor via Swancor.</div></td><td class="num">US$5.1-6.4bn</td><td><span class="pill preparing">Preparing</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="0" data-mkt="CN" data-search="unitree robotics 宇树科技 sse star china&#x27;s first pure-play humanoid and quadruped robotics maker, profitable and export-led." onclick="location.href='unitree.html'"><td class="date-cell">Q3 2026</td><td class="exch">SSE STAR</td><td class="co-cell"><div class="co-name">Unitree Robotics <span class="co-cn">宇树科技</span></div></td><td class="hide-sm"><div class="co-desc">China&#x27;s first pure-play humanoid and quadruped robotics maker, profitable and export-led.</div></td><td class="num">US$5.9bn</td><td><span class="pill approved">Approved</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="1" data-mkt="CN" data-search="momenta 魔门塔 hkex chinese assisted and autonomous driving software supplier to automakers, framed as physical ai." onclick="location.href='momenta.html'"><td class="date-cell">8 Jul 2026</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">Momenta <span class="co-cn">魔门塔</span></div></td><td class="hide-sm"><div class="co-desc">Chinese assisted and autonomous driving software supplier to automakers, framed as physical AI.</div></td><td class="num">US$9.0bn</td><td><span class="pill listed">Listed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="1" data-mkt="CN" data-search="laifual drive 来福谐波 hkex china&#x27;s second-largest harmonic reducer maker, supplying precision joint components for robots and humanoids." onclick="location.href='laifual.html'"><td class="date-cell">30 Jun 2026</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">Laifual Drive <span class="co-cn">来福谐波</span></div></td><td class="hide-sm"><div class="co-desc">China&#x27;s second-largest harmonic reducer maker, supplying precision joint components for robots and humanoids.</div></td><td class="num">US$962m</td><td><span class="pill listed">Listed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="0" data-mkt="CN" data-search="deeprobotics 云深处科技 star hangzhou quadruped and humanoid robot maker, first profitable in 2025, filed for star market ipo." onclick="location.href='deeprobotics.html'"><td class="date-cell">2026</td><td class="exch">STAR</td><td class="co-cell"><div class="co-name">DeepRobotics <span class="co-cn">云深处科技</span></div></td><td class="hide-sm"><div class="co-desc">Hangzhou quadruped and humanoid robot maker, first profitable in 2025, filed for STAR Market IPO.</div></td><td class="num">US$1.9bn</td><td><span class="pill filed">Filed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="0" data-mkt="CN" data-search="galbot 银河通用 hkex beijing maker of general-purpose wheeled humanoid robots, deployed in unmanned pharmacies and retail." onclick="location.href='galbot.html'"><td class="date-cell">2026 (targeted)</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">Galbot <span class="co-cn">银河通用</span></div></td><td class="hide-sm"><div class="co-desc">Beijing maker of general-purpose wheeled humanoid robots, deployed in unmanned pharmacies and retail.</div></td><td class="num">US$3.0bn</td><td><span class="pill preparing">Preparing</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="0" data-mkt="CN" data-search="hai robotics 海柔创新 hkex world&#x27;s largest maker of case-handling warehouse robots, filed for a hong kong ipo." onclick="location.href='hairobotics.html'"><td class="date-cell">2026</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">Hai Robotics <span class="co-cn">海柔创新</span></div></td><td class="hide-sm"><div class="co-desc">World&#x27;s largest maker of case-handling warehouse robots, filed for a Hong Kong IPO.</div></td><td class="num">US$1.3bn</td><td><span class="pill filed">Filed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="0" data-mkt="CN" data-search="pudu robotics 普渡科技 hkex global commercial service robot maker preparing a hong kong listing." onclick="location.href='pudu.html'"><td class="date-cell">2026-2027 (targeted)</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">Pudu Robotics <span class="co-cn">普渡科技</span></div></td><td class="hide-sm"><div class="co-desc">Global commercial service robot maker preparing a Hong Kong listing.</div></td><td class="num">US$1.5bn</td><td><span class="pill preparing">Preparing</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="1" data-mkt="CN" data-search="estun automation 埃斯顿自动化 shenzhen / hkex china&#x27;s largest domestic industrial-robot maker and motion-control supplier, hk dual-listed in 2026, expanding into humanoids." onclick="location.href='estun.html'"><td class="date-cell">9 Mar 2026</td><td class="exch">Shenzhen / HKEX</td><td class="co-cell"><div class="co-name">Estun Automation <span class="co-cn">埃斯顿自动化</span></div></td><td class="hide-sm"><div class="co-desc">China&#x27;s largest domestic industrial-robot maker and motion-control supplier, HK dual-listed in 2026, expanding into humanoids.</div></td><td class="num">US$5.4bn</td><td><span class="pill listed">Listed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="1" data-mkt="CN" data-search="zhipu ai 智谱 hkex china&#x27;s first pure-play large-language-model developer to list publicly; builds the glm foundation-model family." onclick="location.href='zhipu.html'"><td class="date-cell">8 Jan 2026</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">Zhipu AI <span class="co-cn">智谱</span></div></td><td class="hide-sm"><div class="co-desc">China&#x27;s first pure-play large-language-model developer to list publicly; builds the GLM foundation-model family.</div></td><td class="num">US$104bn</td><td><span class="pill listed">Listed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="1" data-mkt="US" data-search="kodiak ai  nasdaq us autonomous-trucking developer running driverless oilfield trucks, public via spac merger." onclick="location.href='kodiak.html'"><td class="date-cell">24 Sep 2025</td><td class="exch">Nasdaq</td><td class="co-cell"><div class="co-name">Kodiak AI</div></td><td class="hide-sm"><div class="co-desc">US autonomous-trucking developer running driverless oilfield trucks, public via SPAC merger.</div></td><td class="num">US$1.0bn</td><td><span class="pill listed">Listed</span></td><td><span class="co-arrow">→</span></td></tr><tr data-listed="1" data-mkt="CN" data-search="geek+ 极智嘉 hkex world&#x27;s largest warehouse amr robotics vendor and first publicly listed amr pure-play." onclick="location.href='geekplus.html'"><td class="date-cell">9 Jul 2025</td><td class="exch">HKEX</td><td class="co-cell"><div class="co-name">Geek+ <span class="co-cn">极智嘉</span></div></td><td class="hide-sm"><div class="co-desc">World&#x27;s largest warehouse AMR robotics vendor and first publicly listed AMR pure-play.</div></td><td class="num">US$1.76bn</td><td><span class="pill listed">Listed</span></td><td><span class="co-arrow">→</span></td></tr></tbody></table></div>
+<div class="empty" id="empty" style="display:none">No companies match these filters.</div></div>
+<div class="disclaimer">Scope: companies with a 2025 or 2026 listing date, whether already trading or filed, approved, preparing, or listing via SPAC or backdoor. Implied valuations are shown in US dollars as a headline figure; for names not yet trading the figure is the last private round, IPO target, or deal value, and is indicative only. Listing dates for pipeline names are expected or targeted. Not investment advice.</div>
+</main>
+<footer><div class="footer-text">Pylon Partners · IPO Terminal. Robotics and embodied AI, China and United States.<br>Compiled 11 Jul 2026 from exchange filings, prospectuses and press reporting. Figures carry the as-of dates shown; "n/d" = not disclosed. Not investment advice.<br><a href="https://pylon.partners" target="_blank" rel="noopener">pylon.partners</a></div></footer>
 <script src="shared.js"></script>
-<script>
-var state={mkt:"all",sub:"all",liveOnly:false,q:""};
-function filtered(){
-  var q=state.q.trim().toLowerCase();
-  return COMPANIES.filter(function(c){
-    if(state.mkt!=="all"&&c.mkt!==state.mkt)return false;
-    if(state.sub!=="all"&&c.sub!==state.sub)return false;
-    if(state.liveOnly&&c.status!=="listed")return false;
-    if(q&&(c.co+" "+(c.cn||"")+" "+SUB_LABEL[c.sub]+" "+c.ticker).toLowerCase().indexOf(q)<0)return false;
-    return true;
-  }).sort(byDateDesc);
-}
-function renderStats(){
-  var listed=COMPANIES.filter(function(c){return c.status==="listed";}).length;
-  var pipe=COMPANIES.filter(function(c){return c.status!=="listed";}).length;
-  var cn=COMPANIES.filter(function(c){return c.mkt==="CN";}).length;
-  var us=COMPANIES.filter(function(c){return c.mkt==="US";}).length;
-  document.getElementById("stats").innerHTML=
-    statHtml("Companies tracked",COMPANIES.length,"China "+cn+" · US "+us)+
-    statHtml("Listed",listed,"trading on public markets")+
-    statHtml("IPO pipeline",pipe,"approved · filed · private")+
-    statHtml("Subsectors",THEME_ORDER.length,"humanoid → lidar → defense");
-}
-function render(){
-  var data=filtered();
-  document.getElementById("count-sub").textContent="— "+data.length+" shown";
-  var c=document.getElementById("tbl");
-  c.innerHTML=data.length?buildTable(data,["company","mkt","sub","status","listing","cap","perf","source"])
-    :'<div class="empty">No companies match these filters.</div>';
-  wireRows(c);
-}
-function syncControls(){
-  Array.prototype.forEach.call(document.querySelectorAll("#mkt-seg button"),function(b){
-    b.classList.toggle("on",b.getAttribute("data-mkt")===state.mkt);});
-  Array.prototype.forEach.call(document.querySelectorAll("#sub-seg button"),function(b){
-    b.classList.toggle("on",b.getAttribute("data-sub")===state.sub);});
-  document.getElementById("live-toggle").classList.toggle("on",state.liveOnly);
-  document.getElementById("search").value=state.q;
-}
-(function(){
-  initChrome("index.html");
-  document.getElementById("lede").innerHTML="A live watchlist of robotics and embodied-AI companies that are public, filing, or on credible IPO watch — spanning humanoids, autonomous driving and robotaxi, warehouse and service robots, surgical robotics, lidar, drones and defence, industrial automation and components. Chinese and US names, side by side. Click any company for a full deep dive with financial-analysis charts and sources.";
-  document.getElementById("disc").innerHTML="Compiled 11 Jul 2026 from exchange filings (HKEX, SSE STAR, Shenzhen, Nasdaq, NYSE), company disclosures and press reporting. Listing dates, deal sizes, market caps and private valuations are indicative and carry the as-of dates shown on each company page. \"n/d\" = not disclosed. Click a row for the deep dive. Not investment advice.";
-  renderStats();syncControls();render();
-  Array.prototype.forEach.call(document.querySelectorAll("#mkt-seg button"),function(b){
-    b.addEventListener("click",function(){state.mkt=b.getAttribute("data-mkt");syncControls();render();});});
-  Array.prototype.forEach.call(document.querySelectorAll("#sub-seg button"),function(b){
-    b.addEventListener("click",function(){state.sub=b.getAttribute("data-sub");syncControls();render();});});
-  document.getElementById("live-toggle").addEventListener("click",function(){state.liveOnly=!state.liveOnly;syncControls();render();});
-  var s=document.getElementById("search");
-  s.addEventListener("input",function(){state.q=s.value;render();});
-})();
-</script>
 </body>
 </html>
