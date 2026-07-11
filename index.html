@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPO Terminal — Robotics · Pylon</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-row">
+    <div>
+      <div class="brand"><a href="index.html">PYLON <span>· IPO Terminal</span></a></div>
+      <div class="brand-sub">Robotics &amp; Embodied AI — China &amp; United States</div>
+    </div>
+    <div class="updated" id="updated"></div>
+  </div>
+  <div class="nav" id="nav"></div>
+</div>
+
+<div class="wrap">
+  <div class="lede" id="lede"></div>
+
+  <div class="ps-wrap" id="stats"></div>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="section-header">
+    <div class="section-label">Robotics IPO pipeline <span class="section-sublabel" id="count-sub"></span></div>
+    <div class="controls">
+      <input type="text" id="search" placeholder="Search company / subsector / ticker…">
+      <div class="seg" id="mkt-seg">
+        <button data-mkt="all" class="on">All</button>
+        <button data-mkt="CN">China</button>
+        <button data-mkt="US">US</button>
+      </div>
+      <div class="seg" id="sub-seg">
+        <button data-sub="all" class="on">All sectors</button>
+        <button data-sub="humanoid">Humanoid</button>
+        <button data-sub="auto">Autonomous</button>
+        <button data-sub="warehouse">Warehouse</button>
+        <button data-sub="lidar">Lidar</button>
+        <button data-sub="defense">Defense</button>
+      </div>
+      <button class="chip" id="live-toggle">● Listed only</button>
+    </div>
+  </div>
+  <div id="tbl"></div>
+  <div class="disclaimer" id="disc"></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="panel" id="panel"></aside>
+
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+var state={mkt:"all",sub:"all",liveOnly:false,q:""};
+function filtered(){
+  var q=state.q.trim().toLowerCase();
+  return COMPANIES.filter(function(c){
+    if(state.mkt!=="all"&&c.mkt!==state.mkt)return false;
+    if(state.sub!=="all"&&c.sub!==state.sub)return false;
+    if(state.liveOnly&&c.status!=="listed")return false;
+    if(q&&(c.co+" "+(c.cn||"")+" "+SUB_LABEL[c.sub]+" "+c.ticker).toLowerCase().indexOf(q)<0)return false;
+    return true;
+  }).sort(byDateDesc);
+}
+function renderStats(){
+  var listed=COMPANIES.filter(function(c){return c.status==="listed";}).length;
+  var pipe=COMPANIES.filter(function(c){return c.status!=="listed";}).length;
+  var cn=COMPANIES.filter(function(c){return c.mkt==="CN";}).length;
+  var us=COMPANIES.filter(function(c){return c.mkt==="US";}).length;
+  document.getElementById("stats").innerHTML=
+    statHtml("Companies tracked",COMPANIES.length,"China "+cn+" · US "+us)+
+    statHtml("Listed",listed,"trading on public markets")+
+    statHtml("IPO pipeline",pipe,"approved · filed · private")+
+    statHtml("Subsectors",THEME_ORDER.length,"humanoid → lidar → defense");
+}
+function render(){
+  var data=filtered();
+  document.getElementById("count-sub").textContent="— "+data.length+" shown";
+  var c=document.getElementById("tbl");
+  c.innerHTML=data.length?buildTable(data,["company","mkt","sub","status","listing","cap","perf","source"])
+    :'<div class="empty">No companies match these filters.</div>';
+  wireRows(c);
+}
+function syncControls(){
+  Array.prototype.forEach.call(document.querySelectorAll("#mkt-seg button"),function(b){
+    b.classList.toggle("on",b.getAttribute("data-mkt")===state.mkt);});
+  Array.prototype.forEach.call(document.querySelectorAll("#sub-seg button"),function(b){
+    b.classList.toggle("on",b.getAttribute("data-sub")===state.sub);});
+  document.getElementById("live-toggle").classList.toggle("on",state.liveOnly);
+  document.getElementById("search").value=state.q;
+}
+(function(){
+  initChrome("index.html");
+  document.getElementById("lede").innerHTML="A live watchlist of robotics and embodied-AI companies that are public, filing, or on credible IPO watch — spanning humanoids, autonomous driving and robotaxi, warehouse and service robots, surgical robotics, lidar, drones and defence, industrial automation and components. Chinese and US names, side by side. Click any company for a full deep dive with financial-analysis charts and sources.";
+  document.getElementById("disc").innerHTML="Compiled 11 Jul 2026 from exchange filings (HKEX, SSE STAR, Shenzhen, Nasdaq, NYSE), company disclosures and press reporting. Listing dates, deal sizes, market caps and private valuations are indicative and carry the as-of dates shown on each company page. \"n/d\" = not disclosed. Click a row for the deep dive. Not investment advice.";
+  renderStats();syncControls();render();
+  Array.prototype.forEach.call(document.querySelectorAll("#mkt-seg button"),function(b){
+    b.addEventListener("click",function(){state.mkt=b.getAttribute("data-mkt");syncControls();render();});});
+  Array.prototype.forEach.call(document.querySelectorAll("#sub-seg button"),function(b){
+    b.addEventListener("click",function(){state.sub=b.getAttribute("data-sub");syncControls();render();});});
+  document.getElementById("live-toggle").addEventListener("click",function(){state.liveOnly=!state.liveOnly;syncControls();render();});
+  var s=document.getElementById("search");
+  s.addEventListener("input",function(){state.q=s.value;render();});
+})();
+</script>
+</body>
+</html>
