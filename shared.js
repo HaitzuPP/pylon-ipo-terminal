@@ -55,7 +55,39 @@ function initHomeFilters(){
   apply();
 }
 
+/* Home page: click a column header to sort the table. */
+function initHomeSort(){
+  var tbody=document.getElementById("rows");
+  if(!tbody)return;
+  var ths=Array.prototype.slice.call(document.querySelectorAll("th.sortable"));
+  function sortBy(th){
+    var key=th.getAttribute("data-key");
+    var dir=th.getAttribute("data-dir")==="asc"?"desc":"asc";
+    ths.forEach(function(h){
+      h.removeAttribute("data-dir");
+      var c=h.querySelector(".caret"); if(c)c.textContent="";
+    });
+    th.setAttribute("data-dir",dir);
+    var caret=th.querySelector(".caret"); if(caret)caret.textContent=dir==="asc"?"▲":"▼";
+    var attr=key==="status"?"listed":(key==="market"?"mkt":key);
+    var numeric=key==="val"||key==="status";
+    var rows=Array.prototype.slice.call(tbody.querySelectorAll("tr"));
+    rows.sort(function(a,b){
+      var av=a.getAttribute("data-"+attr),bv=b.getAttribute("data-"+attr),r;
+      if(numeric){r=parseFloat(av)-parseFloat(bv);}
+      else{r=av<bv?-1:(av>bv?1:0);}
+      return dir==="asc"?r:-r;
+    });
+    rows.forEach(function(r){tbody.appendChild(r);});
+  }
+  ths.forEach(function(th){th.addEventListener("click",function(){sortBy(th);});});
+  // Default: rows ship grouped listed-first, chronological within each group.
+  var s=document.querySelector('th.sortable[data-key="status"]');
+  if(s){s.setAttribute("data-dir","desc");var c=s.querySelector(".caret");if(c)c.textContent="▼";}
+}
+
 (function(){
   syncThemeIcon();
   initHomeFilters();
+  initHomeSort();
 })();

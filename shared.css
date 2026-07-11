@@ -97,7 +97,14 @@ tbody tr:hover .co-arrow{color:var(--accent);transform:translateX(2px)}
 .pill.preparing{background:var(--purple-dim);color:var(--purple);border-color:color-mix(in srgb,var(--purple) 40%,transparent)}
 .pill.spac{background:var(--orange-dim);color:var(--orange);border-color:color-mix(in srgb,var(--orange) 40%,transparent)}
 .pill.backdoor{background:var(--gold-dim);color:var(--gold);border-color:color-mix(in srgb,var(--gold) 40%,transparent)}
+.pill.reported{background:var(--amber-dim);color:var(--amber);border-color:color-mix(in srgb,var(--amber) 40%,transparent)}
 .pill.gray{background:color-mix(in srgb,var(--text-muted) 18%,var(--bg));color:var(--text-sec);border-color:var(--border)}
+
+/* sortable headers */
+th.sortable{cursor:pointer;user-select:none;-webkit-user-select:none;transition:color .15s}
+th.sortable:hover{color:var(--text-sec)}
+th[data-dir]{color:var(--text)}
+th .caret{font-size:.6rem;margin-left:.2rem;color:var(--accent)}
 
 .empty{padding:3rem 1rem;text-align:center;color:var(--text-muted);font-size:.9rem}
 .disclaimer{margin-top:1.5rem;font-size:.72rem;color:var(--text-muted);line-height:1.6;max-width:900px}
