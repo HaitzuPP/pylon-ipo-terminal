@@ -1,4 +1,4 @@
-/* ===== Pylon IPO Terminal — runtime =====
+/* ===== Pylon IPO Terminal · runtime =====
    Theme toggle, mobile nav, and home-table filtering. Content is static HTML. */
 
 function toggleTheme(){
