@@ -169,6 +169,32 @@ th .caret{font-size:.6rem;margin-left:.2rem;color:var(--accent)}
 .mix-key b{color:var(--text);font-weight:600;margin-left:auto}
 .chart-note{font-size:.7rem;color:var(--text-muted);margin-top:.9rem;line-height:1.5}
 
+/* financial table */
+.fin-wrap{margin-top:1.2rem}
+.fin-table td,.fin-table th{vertical-align:top}
+.fin-table td.fy{font-weight:600;white-space:nowrap}
+.fin-table td.factor{font-size:.78rem;color:var(--text-sec);line-height:1.45;white-space:normal;max-width:280px}
+.fin-table td.num{white-space:nowrap}
+.yy{font-size:.64rem;margin-top:.2rem;font-family:Arial,Helvetica,sans-serif;letter-spacing:.2px}
+.yy.up{color:var(--accent)}
+.yy.down{color:var(--red)}
+.yy.muted{color:var(--text-muted)}
+.negmoney{color:var(--red)}
+.fin-cap{font-size:.7rem;color:var(--text-muted);margin-top:.7rem;line-height:1.55;max-width:900px}
+
+/* revenue & cost drivers */
+.drivers-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-top:.4rem}
+.driver-head{font-size:.78rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.driver-listing{display:flex;flex-direction:column;gap:.85rem}
+.driver-factor{font-weight:600;font-size:.86rem;display:flex;align-items:center;gap:.5rem}
+.driver-factor:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+.driver-col.cost .driver-factor:before{background:var(--amber)}
+.driver-note{font-size:.8rem;color:var(--text-sec);line-height:1.5;margin-top:.25rem;padding-left:1rem}
+.cbars{display:flex;flex-direction:column;gap:.75rem}
+.cbar-top{display:flex;justify-content:space-between;gap:1rem;font-size:.78rem;color:var(--text-sec);margin-bottom:.32rem}
+.cbar-top b{color:var(--text);font-weight:600;white-space:nowrap}
+@media(max-width:768px){.drivers-grid{grid-template-columns:1fr}}
+
 /* sources */
 .sources{list-style:none;margin-top:.4rem;display:flex;flex-direction:column;gap:.55rem}
 .sources li{font-size:.82rem;line-height:1.5}
